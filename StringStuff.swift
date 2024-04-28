@@ -57,14 +57,16 @@ func main() {
         let shrinkData: Data = (shrink(line) + "\n").data(using: .utf8) ?? Data()
         shrinkOutput.write(shrinkData)
     }
+
 }
 
 // Blow Up method.
 func blowUp(_ str: String) -> String {
-    // Initialize variable.
-    var output = ""
     // Convert input string into an array.
     let lineArr = Array(str)
+
+    // Initialize variable.
+    var output = ""
 
     // Loop through every character in the array
     for i in 0..<lineArr.count {
@@ -90,20 +92,27 @@ func blowUp(_ str: String) -> String {
 
 // Max Run method.
 func maxRun(_ str: String) -> Int {
-    var maxRun = 0
-    var currentRun = 1
+    // Initialize array from the string.
     let lineArr = Array(str)
 
+    // Initialize variables
+    var maxRun = 0
+    var currentRun = 1
     var lastChar = lineArr[0]
 
     // Loop through every character in the array
     for i in 1..<lineArr.count {
+        // Check if the last character is the same as the current character.
         if lastChar == lineArr[i] {
+            // Increment current run length.
             currentRun += 1
         } else {
+            // Check if the current run has surpassed the previous max run.
             if currentRun > maxRun {
+                // Set the max run to the current run.
                 maxRun = currentRun
             }
+            // Reset current run and set last char to the current char.
             currentRun = 1
             lastChar = lineArr[i]
         }
@@ -113,29 +122,40 @@ func maxRun(_ str: String) -> Int {
 
 // Shrink method.
 func shrink(_ str: String) -> String {
-    var output = ""
-    var currentRun = 0
+    // Initialize array from the string.
     let lineArr = Array(str)
 
+    // Initialize variables.
+    var output = ""
+    var currentRun = 0
     var currentChar = lineArr[0]
 
     // Loop through every character in the array
     for i in 1..<lineArr.count {
+        // Check if the previous character is the same as the current.
         if currentChar == lineArr[i] {
+            // Increment the current run length.
             currentRun += 1
         } else {
+            // Ensure the current run is not 0.
             if currentRun != 0 {
+                // Add the run length and the character to the string eg. '3f'.
                 output.append("\(currentRun)\(currentChar)")
             } else {
+                // Add just the current character to the string.
                 output.append(currentChar)
             }
+            // Reset current run and set the current char to the current char.
             currentRun = 0
             currentChar = lineArr[i]
         }
     }
+    // Run the if block one more time to get the last letter.
     if currentRun != 0 {
+        // Add the run length and the character to the string eg. '3f'.
         output.append("\(currentRun)\(currentChar)")
     } else {
+        // Add just the current character to the string.
         output.append(currentChar)
     }
     return output
